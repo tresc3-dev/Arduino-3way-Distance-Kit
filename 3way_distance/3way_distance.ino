@@ -1,73 +1,73 @@
 #include "LiquidCrystal_I2C.h"
 
-#define TRIG1 5
-#define ECHO1 4
-#define TRIG2 9
-#define ECHO2 8
-#define TRIG3 13
-#define ECHO3 12
+#define TRIG_LEFT 5
+#define ECHO_LEFT 4
+#define TRIG_MIDDLE 9
+#define ECHO_MIDDLE 8
+#define TRIG_RIGHT 13
+#define ECHO_RIGHT 12
 
 LiquidCrystal_I2C lcd(0x27, 20, 40);
 
-double dist1;
-double dist2;
-double dist3;
+double dist_left;
+double dist_middle;
+double dist_right;
 
-String d1;
-String d2;
-String d3;
+String string_left;
+String string_middle;
+String string_right;
 
 void setup()
 {
     lcd.begin();
     lcd.backlight();
 
-    pinMode(TRIG1, OUTPUT);
-    pinMode(ECHO1, INPUT);
-    pinMode(TRIG2, OUTPUT);
-    pinMode(ECHO2, INPUT);
-    pinMode(TRIG3, OUTPUT);
-    pinMode(ECHO3, INPUT);
+    pinMode(TRIG_LEFT, OUTPUT);
+    pinMode(ECHO_LEFT, INPUT);
+    pinMode(TRIG_MIDDLE, OUTPUT);
+    pinMode(ECHO_MIDDLE, INPUT);
+    pinMode(TRIG_RIGHT, OUTPUT);
+    pinMode(ECHO_RIGHT, INPUT);
 }
 
 void loop()
 {
-    digitalWrite(TRIG1, LOW);
+    digitalWrite(TRIG_MIDDLE, LOW);
     delayMicroseconds(2);
-    digitalWrite(TRIG1, HIGH);
+    digitalWrite(TRIG_MIDDLE, HIGH);
     delayMicroseconds(10);
-    digitalWrite(TRIG1, LOW);
+    digitalWrite(TRIG_MIDDLE, LOW);
 
-    dist1 = pulseIn(ECHO1, HIGH) * 17.0 / 1000.0;
-    d1 = String(dist1, 1);
+    dist_middle = pulseIn(ECHO_MIDDLE, HIGH) * 17.0 / 1000.0;
+    string_middle = String(dist_middle, 1);
 
-    digitalWrite(TRIG2, LOW);
+    digitalWrite(TRIG_LEFT, LOW);
     delayMicroseconds(2);
-    digitalWrite(TRIG2, HIGH);
+    digitalWrite(TRIG_LEFT, HIGH);
     delayMicroseconds(10);
-    digitalWrite(TRIG2, LOW);
+    digitalWrite(TRIG_LEFT, LOW);
 
-    dist2 = pulseIn(ECHO2, HIGH) * 17.0 / 1000.0;
-    d2 = String(dist2, 1);
+    dist_left = pulseIn(ECHO_LEFT, HIGH) * 17.0 / 1000.0;
+    string_left = String(dist_left, 1);
 
-    digitalWrite(TRIG3, LOW);
+    digitalWrite(TRIG_RIGHT, LOW);
     delayMicroseconds(2);
-    digitalWrite(TRIG3, HIGH);
+    digitalWrite(TRIG_RIGHT, HIGH);
     delayMicroseconds(10);
-    digitalWrite(TRIG3, LOW);
+    digitalWrite(TRIG_RIGHT, LOW);
 
-    dist3 = pulseIn(ECHO3, HIGH) * 17.0 / 1000.0;
-    d3 = String(dist3, 1);
+    dist_right = pulseIn(ECHO_RIGHT, HIGH) * 17.0 / 1000.0;
+    string_right = String(dist_right, 1);
 
     lcd.clear();
     lcd.setCursor(7, 0);
-    lcd.print(d1);
+    lcd.print(string_middle);
     lcd.print("cm");
     lcd.setCursor(0, 3);
-    lcd.print(d2);
+    lcd.print(string_left);
     lcd.print("cm");
     lcd.setCursor(18-d3.length(), 3);
-    lcd.print(d3);
+    lcd.print(string_right);
     lcd.print("cm");
     lcd.display();
 
