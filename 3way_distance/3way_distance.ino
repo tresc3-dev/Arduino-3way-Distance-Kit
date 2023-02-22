@@ -66,7 +66,7 @@ void loop()
     lcd.setCursor(0, 3);
     lcd.print(string_left);
     lcd.print("cm");
-    lcd.setCursor(18-d3.length(), 3);
+    lcd.setCursor(18 - string_right.length(), 3);
     lcd.print(string_right);
     lcd.print("cm");
     lcd.display();
